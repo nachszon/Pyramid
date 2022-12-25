@@ -1,0 +1,136 @@
+--[[Pyramid.lua
+December 2021
+
+author: Nachszon
+https://github.com/nachszon/
+
+Program description
+The program builds a pyramid (isosceles triangle).
+The size of the Pyramid is a random size.
+The stones are also random numbers.
+The program calculates the length of the base, side and number of stones.
+The above data are printed as technical data.
+
+Release 02.12.2021
+function func_technical_data(side,ground,stones)
+Change the presentation of the number of stones from a floating point number to an integer
+
+]]--
+
+
+--[[function]]--
+--Randomization engine start - ensures the uniqueness of the random number 
+function func_start_rand_engine()
+    
+    math.randomseed(os.time())
+    
+    end
+
+--[[function]]--
+--The function that prints technical data of the Pyramid 
+function func_technical_data(side,ground,stones)
+    
+    print ("\nTechnical data of the Pyramid:")
+    print ("Side:"..side)
+    print ("Ground:"..ground)
+    print (string.format("Stones: %.0f", stones))
+    
+    end
+
+--[[function]]--
+--A function that creates a reference to an array 
+function func_create_ref_array(max_row)
+    
+    pyramid_array={}
+    for row=1,max_row do
+        pyramid_array[row]={}
+        end
+    
+    end
+
+--[[function]]--
+--Function that generates one random number from min_rand to max_rand 
+function func_gen_rand(min_rand,max_rand)
+    
+    rand_number=math.random(min_rand,max_rand)
+    
+    return rand_number
+    
+    end
+
+--[[function]]--
+--The function that builds the Pyramid 
+function func_pyramid_build(min_stone,max_stone)
+    
+    
+    --Side size. The highest index of a row in a two-dimensional array 
+    max_side=func_gen_rand(min_stone,max_stone,min_stone,max_stone)
+    
+    --Base size. Highest column index of a two-dimensional array 
+    max_ground=(max_side*2)-1
+    
+    --Create a reference to an array pyramid_array
+    func_create_ref_array(max_side)
+    
+    --left_limit and right limit are spaces in the two-dimensional array that will be left blank 
+    --actually they will be filled with an invisible space
+    left_limit=max_side-1
+    right_limit=max_side+1
+    
+    
+    --Filling the array.
+    --If the column index is less than or equal to left_limit, fill in the field with a space. 
+    --Fill in the remaining fields with a random number from 0-9
+    for side=1,max_side do
+        for ground=1,max_ground do
+            
+            if ground <= left_limit or ground >= right_limit then
+                 pyramid_array[side][ground]=" " else
+                pyramid_array[side][ground]=func_gen_rand(0,9)
+                end
+            
+            end
+        left_limit=left_limit-1
+        right_limit=right_limit+1
+        end
+    
+    
+    --Technical data
+    pyramid_side=max_side
+    pyramid_ground=max_ground
+    pyramid_stones=(max_side^2)
+    
+    
+    end
+
+
+--[[function]]--
+--Printing the Pyramid 
+function func_pyramid_show()
+    
+    for side=1,max_side do
+        for ground=1,max_ground do
+            io.write(pyramid_array[side][ground])
+            end
+        io.write("\n")
+        end
+    
+    
+    
+    
+    
+    
+    end
+
+
+--Randomization engine start
+func_start_rand_engine()
+--Building a Pyramid 
+func_pyramid_build(8,25)
+--Printing the Pyramid 
+func_pyramid_show()
+--Technical data
+func_technical_data(pyramid_side,pyramid_ground,pyramid_stones)
+
+                
+               
